@@ -28,7 +28,7 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ =9;//17;//20;//9.2;//10; //9//30;
+  std_a_ =1.5; //Updated as per review comment //9;//17;//20;//9.2;//10; //9//30;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 0.3;//1.5; //0.5;//5;//0.001;//15;//0.4;//0.3//30;
@@ -107,12 +107,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 	//using CTRV model Init x with 5 elements
 
 	x_ = VectorXd(5);
-	x_ << 1, 1, 1, 1,1;
-	P_ << 0.1, 0, 0, 0, 0,
-					0, 0.1, 0, 0, 0,
-					0, 0, 0.1, 0, 0,
-					0, 0, 0, 0.1, 0,
-					0, 0, 0, 0, 0.1;
+	// x_ << 1, 1, 1, 1,1;  //Updated as per review comment
+	P_ << 1, 0, 0, 0, 0,
+					0, 1, 0, 0, 0,
+					0, 0, 1, 0, 0,
+					0, 0, 0, 1, 0,
+					0, 0, 0, 0, 1;
 	time_us_ = meas_package.timestamp_;
 
 	if (meas_package.sensor_type_ == MeasurementPackage::RADAR&& use_radar_) 
